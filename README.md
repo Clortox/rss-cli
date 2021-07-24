@@ -25,3 +25,5 @@ To install
 Usage
 =====
 
+`./bin/rss-cli --help`
+
