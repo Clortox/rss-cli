@@ -4,12 +4,14 @@
 // options parsing
 //
 
+#pragma once
+
 #include <string>
 #include <iostream>
 #include <getopt.h>
 
 //cli options
-constexpr char* optarg_string = "u:tldemcpqgowbh";
+constexpr char optarg_string[] = "u:tldemcpqgowbh";
 
 static struct option long_options[] =
 {

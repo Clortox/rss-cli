@@ -9,6 +9,7 @@
 #include <getopt.h>
 
 #include "config.hpp"
+#include "rss_out.hpp"
 #include "options.hpp"
 #include "rss.hpp"
 
@@ -31,13 +32,11 @@ int main(int argc, char** argv) {
         exit(-1);
 
     //display requested attributes
+    std::string output = rss_utils::rss_to_list(feed, opts);
+
+    std::cout << output << std::endl;
 
 
-    
-
-
-
-
-
+    delete opts;
     return 0;
 }

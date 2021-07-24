@@ -170,6 +170,57 @@ std::string rss::getPubDate() const {
 
 }
 
+std::string rss::getManagingEditor() const {
+    if(!ok)
+        return "";
+
+    rapidxml::xml_node<> *tmp = item_node->first_node("managingEditor");
+    if(tmp == 0)
+        return "";
+    return tmp->value();
+}
+
+std::string rss::getGenerator() const {
+    if(!ok)
+        return "";
+
+    rapidxml::xml_node<> *tmp = item_node->first_node("generator");
+    if(tmp == 0)
+        return "";
+    return tmp->value();
+}
+
+std::string rss::getDocs() const {
+    if(!ok)
+        return "";
+
+    rapidxml::xml_node<> *tmp = item_node->first_node("docs");
+    if(tmp == 0)
+        return "";
+    return tmp->value();
+}
+
+std::string rss::getTTL() const {
+    if(!ok)
+        return "";
+
+    rapidxml::xml_node<> *tmp = item_node->first_node("ttl");
+    if(tmp == 0)
+        return "";
+    return tmp->value();
+
+}
+
+std::string rss::getLastBuildDate() const {
+    if(!ok)
+        return "";
+
+    rapidxml::xml_node<> *tmp = item_node->first_node("lastBuildDate");
+    if(tmp == 0)
+        return "";
+    return tmp->value();
+}
+
 std::vector<std::map<std::string, std::string>> rss::getItems() const {
     std::vector<std::map<std::string, std::string>> items;
 
