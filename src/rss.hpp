@@ -11,6 +11,7 @@
 #endif
 
 #include <string>
+#include <sstream>
 #include <vector>
 #include <map>
 #include <iostream>
@@ -69,6 +70,7 @@ namespace rss_utils {
     private:
         bool parse(const std::string&);
         std::vector<rapidxml::xml_node<>*> parseItems();
+        std::string cdata_to_string(const rapidxml::xml_node<>*) const;
 
         bool _ok;
         std::string _uri;
@@ -99,6 +101,8 @@ namespace rss_utils {
 
 
     private:
+        std::string cdata_to_string(const rapidxml::xml_node<>*) const;
+
         rapidxml::xml_node<> *_item;
     };
 

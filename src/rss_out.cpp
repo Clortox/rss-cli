@@ -49,6 +49,11 @@ std::string rss_utils::rss_to_items(const rss& rss_obj, const option_flags* flag
     int maxItem = rss_obj.getItemCount();
     std::string ret;
 
+    if(maxItem == -1){
+        ret = "<No items in feed!>";
+        return ret;
+    }
+
     for(unsigned int i=0; i < flags->item_count; ++i, ++items){
         //if has a valid index
         if(items->index >= 0 && items->index < maxItem){

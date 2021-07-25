@@ -93,13 +93,22 @@ option_flags* parse_options(int argc, char** argv) {
                     current_item->description ^= 1;
                 break;
             case 'e':
-                ret->language ^= 1;
+                if(current_item == nullptr)
+                    ret->language ^= 1;
+                else
+                    std::cerr << "-e option not understood in context of --item; ignoring" << std::endl;
                 break;
             case 'm':
-                ret->webmaster ^= 1;
+                if(current_item == nullptr)
+                    ret->webmaster ^= 1;
+                else
+                    std::cerr << "-m option not understood in context of --item; ignoring" << std::endl;
                 break;
             case 'c':
-                ret->copyright ^= 1;
+                if(current_item == nullptr)
+                    ret->copyright ^= 1;
+                else
+                    std::cerr << "-c option not understood in context of --item; ignoring" << std::endl;
                 break;
             case 'p':
                 if(current_item == nullptr)
@@ -108,19 +117,34 @@ option_flags* parse_options(int argc, char** argv) {
                     current_item->pubdate ^= 1;
                 break;
             case 'q':
-                ret->managingeditor ^= 1;
+                if(current_item == nullptr)
+                    ret->managingeditor ^= 1;
+                else
+                    std::cerr << "-q option not understood in context of --item; ignoring" << std::endl;
                 break;
             case 'g':
-                ret->generator ^= 1;
+                if(current_item == nullptr)
+                    ret->generator ^= 1;
+                else
+                    std::cerr << "-g option not understood in context of --item; ignoring" << std::endl;
                 break;
             case 'o':
-                ret->docs ^= 1;
+                if(current_item == nullptr)
+                    ret->docs ^= 1;
+                else
+                    std::cerr << "-o option not understood in context of --item; ignoring" << std::endl;
                 break;
             case 'w':
-                ret->ttl ^= 1;
+                if(current_item == nullptr)
+                    ret->ttl ^= 1;
+                else
+                    std::cerr << "-w option not understood in context of --item; ignoring" << std::endl;
                 break;
             case 'b':
-                ret->builddate ^= 1;
+                if(current_item == nullptr)
+                    ret->builddate ^= 1;
+                else
+                    std::cerr << "-b option not understood in context of --item; ignoring" << std::endl;
                 break;
             case 'i':
                 if(ret->items == nullptr){

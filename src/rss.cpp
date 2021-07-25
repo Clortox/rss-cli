@@ -106,7 +106,7 @@ std::string rss::getTitle() const {
     rapidxml::xml_node<> *tmp = _item_node->first_node("title");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 }
 
 std::string rss::getLink() const {
@@ -116,7 +116,7 @@ std::string rss::getLink() const {
     rapidxml::xml_node<> *tmp = _item_node->first_node("link");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 }
 
 std::string rss::getDescription() const {
@@ -126,7 +126,7 @@ std::string rss::getDescription() const {
     rapidxml::xml_node<> *tmp = _item_node->first_node("description");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 }
 
 std::string rss::getLanguage() const {
@@ -136,7 +136,7 @@ std::string rss::getLanguage() const {
     rapidxml::xml_node<> *tmp = _item_node->first_node("language");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 }
 
 std::string rss::getWebMaster() const {
@@ -146,7 +146,7 @@ std::string rss::getWebMaster() const {
     rapidxml::xml_node<> *tmp = _item_node->first_node("webMaster");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 }
 
 std::string rss::getCopyright() const {
@@ -156,7 +156,7 @@ std::string rss::getCopyright() const {
     rapidxml::xml_node<> *tmp = _item_node->first_node("copyright");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 }
 
 std::string rss::getPubDate() const {
@@ -166,7 +166,7 @@ std::string rss::getPubDate() const {
     rapidxml::xml_node<> *tmp = _item_node->first_node("pubDate");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 
 }
 
@@ -177,7 +177,7 @@ std::string rss::getManagingEditor() const {
     rapidxml::xml_node<> *tmp = _item_node->first_node("managingEditor");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 }
 
 std::string rss::getGenerator() const {
@@ -187,7 +187,7 @@ std::string rss::getGenerator() const {
     rapidxml::xml_node<> *tmp = _item_node->first_node("generator");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 }
 
 std::string rss::getDocs() const {
@@ -197,7 +197,7 @@ std::string rss::getDocs() const {
     rapidxml::xml_node<> *tmp = _item_node->first_node("docs");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 }
 
 std::string rss::getTTL() const {
@@ -207,7 +207,7 @@ std::string rss::getTTL() const {
     rapidxml::xml_node<> *tmp = _item_node->first_node("ttl");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 
 }
 
@@ -218,7 +218,7 @@ std::string rss::getLastBuildDate() const {
     rapidxml::xml_node<> *tmp = _item_node->first_node("lastBuildDate");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 }
 
 int rss::getItemCount() const {
@@ -324,9 +324,33 @@ bool rss::parse(const std::string& rss_str){
     return _ok;
 }
 
+std::string rss::cdata_to_string(const rapidxml::xml_node<>* node) const{
+    //this will dig till were past the cdata
+    std::cout << "in cdata" << std::endl;
+    const rapidxml::xml_node<>* tmp = node;
+    while(tmp->value()[0] == '\0'){ //if string is empty
+        tmp = tmp->first_node();
+        if(tmp == NULL)
+            return "";
+    }
+    return tmp->value();
+}
+
 size_t rss_utils::write_to_string(void* ptr, size_t size, size_t nmemb, std::string* s){
     s->append(static_cast<char *>(ptr), size * nmemb);
     return size * nmemb;
+}
+
+std::string item::cdata_to_string(const rapidxml::xml_node<>* node) const{
+    //this will dig till were past the cdata
+    std::cout << "in cdata" << std::endl;
+    const rapidxml::xml_node<>* tmp = node;
+    while(tmp->value()[0] == '\0'){ //if string is empty
+        tmp = tmp->first_node();
+        if(tmp == NULL)
+            return "";
+    }
+    return tmp->value();
 }
 
 item::item() {}
@@ -356,42 +380,42 @@ std::string item::getTitle() const {
     rapidxml::xml_node<>* tmp = _item->first_node("title");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 }
 
 std::string item::getLink() const {
     rapidxml::xml_node<>* tmp = _item->first_node("link");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 }
 
 std::string item::getDescription() const {
     rapidxml::xml_node<>* tmp = _item->first_node("description");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 }
 
 std::string item::getAuthor() const {
     rapidxml::xml_node<>* tmp = _item->first_node("author");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 }
 
 std::string item::getCategory() const {
     rapidxml::xml_node<>* tmp = _item->first_node("category");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 }
 
 std::string item::getComments() const {
     rapidxml::xml_node<>* tmp = _item->first_node("comments");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 }
 
 /*
@@ -399,7 +423,7 @@ std::string item::getEnclosure() const {
     rapidxml::xml_node<>* tmp = _item->first_node("enclosure");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 }
 */
 
@@ -407,20 +431,20 @@ std::string item::getGuid() const {
     rapidxml::xml_node<>* tmp = _item->first_node("guid");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 }
 
 std::string item::getPubDate() const {
     rapidxml::xml_node<>* tmp = _item->first_node("pubDate");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 }
 
 std::string item::getSource() const {
     rapidxml::xml_node<>* tmp = _item->first_node("source");
     if(tmp == 0)
         return "";
-    return tmp->value();
+    return cdata_to_string(tmp);
 }
 
