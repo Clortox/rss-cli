@@ -34,7 +34,9 @@ int main(int argc, char** argv) {
 
 
     //display requested attributes and items
-    std::string output = rss_utils::rss_to_list(feed, opts);
+    std::string output = "";
+    if(!rss_utils::rss_opts_empty(opts))
+        output = rss_utils::rss_to_list(feed, opts);
 
     if(opts->items != nullptr){
         feed.getItems();

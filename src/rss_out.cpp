@@ -82,3 +82,33 @@ std::string rss_utils::rss_to_items(const rss& rss_obj, const option_flags* flag
 
     return ret;
 }
+
+bool rss_utils::rss_opts_empty(const option_flags* flags){
+    if(flags->title)
+        return false;
+    if(flags->link)
+        return false;
+    if(flags->description)
+        return false;
+    if(flags->language)
+        return false;
+    if(flags->webmaster)
+        return false;
+    if(flags->copyright)
+        return false;
+    if(flags->pubdate)
+        return false;
+    if(flags->managingeditor)
+        return false;
+    if(flags->generator)
+        return false;
+    if(flags->docs)
+        return false;
+    if(flags->ttl)
+        return false;
+    if(flags->builddate)
+        return false;
+
+    return true;
+
+}

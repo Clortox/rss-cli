@@ -14,5 +14,6 @@
 namespace rss_utils {
     std::string rss_to_list(const rss&, const option_flags*);
     std::string rss_to_items(const rss&, const option_flags*);
+    bool rss_opts_empty(const option_flags*);
 
 }
