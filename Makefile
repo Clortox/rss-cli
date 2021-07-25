@@ -26,6 +26,9 @@ all : $(OBJ)
 .cpp.o :
 	$(CC) $(FLAGS) $(CFLAGS) $(LIBRARIES) -c $< -o $@
 
+install : all
+
+
 clean :
 	find . -type f -name '*.o' -delete
 	rm -rf $(TARGET)
