@@ -13,6 +13,5 @@
 
 namespace rss_utils {
     void testRSS();
-
-
+    void testItems();
 }

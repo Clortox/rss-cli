@@ -20,6 +20,7 @@
 int main(int argc, char** argv) {
 #if _TESTS_ == 1
     rss_utils::testRSS();
+    rss_utils::testItems();
     return 0;
 #endif
 

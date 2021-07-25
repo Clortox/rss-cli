@@ -9,43 +9,43 @@
 using namespace rss_utils;
 
 rss::rss() {
-    uri = "";
-    ok = false;
-    item_node = nullptr;
+    _uri = "";
+    _ok = false;
+    _item_node = nullptr;
 }
 
 rss::rss(const std::string& rss_uri, bool perf_update){
-    uri = rss_uri;
-    item_node = nullptr;
-    ok = false;
+    _uri = rss_uri;
+    _item_node = nullptr;
+    _ok = false;
     if(perf_update)
         update();
 }
 
 rss::rss(const char* rss_uri, bool perf_update){
-    uri = std::string(rss_uri);
-    ok = false;
-    item_node = nullptr;
+    _uri = std::string(rss_uri);
+    _ok = false;
+    _item_node = nullptr;
     if(perf_update)
         update();
 }
 
 rss::rss(const rss& rhs){
-    uri = rhs.uri;
-    ok = false;
-    item_node = nullptr;
+    _uri = rhs._uri;
+    _ok = false;
+    _item_node = nullptr;
     update();
 }
 
 rss::~rss(){
-    doc.clear();
+    _doc.clear();
 }
 
 rss& rss::operator=(const rss& rhs){
     if(this != &rhs){
-        uri = rhs.uri;
-        ok = false;
-        item_node = nullptr;
+        _uri = rhs._uri;
+        _ok = false;
+        _item_node = nullptr;
         update();
     }
     return *this;
@@ -56,23 +56,23 @@ rss* rss::clone() const {
     return clone;
 }
 
-bool rss::isOk() const { return ok; }
+bool rss::isOk() const { return _ok; }
 
 void rss::setURI(const std::string& rss_uri, bool perf_update) {
-    uri = rss_uri;
-    ok = false;
+    _uri = rss_uri;
+    _ok = false;
     if(perf_update)
         update();
 }
 
 void rss::setURI(const char* rss_uri, bool perf_update) {
-    uri = std::string(rss_uri);
-    ok = false;
+    _uri = std::string(rss_uri);
+    _ok = false;
     if(perf_update)
         update();
 }
 
-std::string rss::getURI() const { return uri; }
+std::string rss::getURI() const { return _uri; }
 
 bool rss::update() {
     std::string result;
@@ -82,7 +82,7 @@ bool rss::update() {
     curl = curl_easy_init();
 
     if(curl){
-        curl_easy_setopt(curl, CURLOPT_URL, uri.c_str());
+        curl_easy_setopt(curl, CURLOPT_URL, _uri.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, rss_utils::write_to_string);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
         res = curl_easy_perform(curl);
@@ -95,75 +95,75 @@ bool rss::update() {
                 << curl_easy_strerror(res) << std::endl;
         }
     }
-    ok = false;
+    _ok = false;
     return false;
 }
 
 std::string rss::getTitle() const {
-    if(!ok)
+    if(!_ok)
         return "";
 
-    rapidxml::xml_node<> *tmp = item_node->first_node("title");
+    rapidxml::xml_node<> *tmp = _item_node->first_node("title");
     if(tmp == 0)
         return "";
     return tmp->value();
 }
 
 std::string rss::getLink() const {
-    if(!ok)
+    if(!_ok)
         return "";
 
-    rapidxml::xml_node<> *tmp = item_node->first_node("link");
+    rapidxml::xml_node<> *tmp = _item_node->first_node("link");
     if(tmp == 0)
         return "";
     return tmp->value();
 }
 
 std::string rss::getDescription() const {
-    if(!ok)
+    if(!_ok)
         return "";
 
-    rapidxml::xml_node<> *tmp = item_node->first_node("description");
+    rapidxml::xml_node<> *tmp = _item_node->first_node("description");
     if(tmp == 0)
         return "";
     return tmp->value();
 }
 
 std::string rss::getLanguage() const {
-    if(!ok)
+    if(!_ok)
         return "";
 
-    rapidxml::xml_node<> *tmp = item_node->first_node("language");
+    rapidxml::xml_node<> *tmp = _item_node->first_node("language");
     if(tmp == 0)
         return "";
     return tmp->value();
 }
 
 std::string rss::getWebMaster() const {
-    if(!ok)
+    if(!_ok)
         return "";
 
-    rapidxml::xml_node<> *tmp = item_node->first_node("webMaster");
+    rapidxml::xml_node<> *tmp = _item_node->first_node("webMaster");
     if(tmp == 0)
         return "";
     return tmp->value();
 }
 
 std::string rss::getCopyright() const {
-    if(!ok)
+    if(!_ok)
         return "";
 
-    rapidxml::xml_node<> *tmp = item_node->first_node("copyright");
+    rapidxml::xml_node<> *tmp = _item_node->first_node("copyright");
     if(tmp == 0)
         return "";
     return tmp->value();
 }
 
 std::string rss::getPubDate() const {
-    if(!ok)
+    if(!_ok)
         return "";
 
-    rapidxml::xml_node<> *tmp = item_node->first_node("pubDate");
+    rapidxml::xml_node<> *tmp = _item_node->first_node("pubDate");
     if(tmp == 0)
         return "";
     return tmp->value();
@@ -171,40 +171,40 @@ std::string rss::getPubDate() const {
 }
 
 std::string rss::getManagingEditor() const {
-    if(!ok)
+    if(!_ok)
         return "";
 
-    rapidxml::xml_node<> *tmp = item_node->first_node("managingEditor");
+    rapidxml::xml_node<> *tmp = _item_node->first_node("managingEditor");
     if(tmp == 0)
         return "";
     return tmp->value();
 }
 
 std::string rss::getGenerator() const {
-    if(!ok)
+    if(!_ok)
         return "";
 
-    rapidxml::xml_node<> *tmp = item_node->first_node("generator");
+    rapidxml::xml_node<> *tmp = _item_node->first_node("generator");
     if(tmp == 0)
         return "";
     return tmp->value();
 }
 
 std::string rss::getDocs() const {
-    if(!ok)
+    if(!_ok)
         return "";
 
-    rapidxml::xml_node<> *tmp = item_node->first_node("docs");
+    rapidxml::xml_node<> *tmp = _item_node->first_node("docs");
     if(tmp == 0)
         return "";
     return tmp->value();
 }
 
 std::string rss::getTTL() const {
-    if(!ok)
+    if(!_ok)
         return "";
 
-    rapidxml::xml_node<> *tmp = item_node->first_node("ttl");
+    rapidxml::xml_node<> *tmp = _item_node->first_node("ttl");
     if(tmp == 0)
         return "";
     return tmp->value();
@@ -212,26 +212,72 @@ std::string rss::getTTL() const {
 }
 
 std::string rss::getLastBuildDate() const {
-    if(!ok)
+    if(!_ok)
         return "";
 
-    rapidxml::xml_node<> *tmp = item_node->first_node("lastBuildDate");
+    rapidxml::xml_node<> *tmp = _item_node->first_node("lastBuildDate");
     if(tmp == 0)
         return "";
     return tmp->value();
 }
 
-std::vector<std::map<std::string, std::string>> rss::getItems() const {
-    std::vector<std::map<std::string, std::string>> items;
+int rss::getItemCount() const {
+    if(!_ok)
+        return -1;
 
-    if(!ok)
+    return _items.size();
+}
+
+std::vector<item> rss::getItems() {
+    if(!_ok)
+        return std::vector<item>();
+
+    if(!_items.empty())
+        return _items;
+
+    //items is empty, have not processed the items yet
+    std::vector<rapidxml::xml_node<>*> items;
+    items = parseItems();
+    for(auto it = items.begin(); it != items.end(); ++it){
+        item i(*it);
+        _items.push_back(i);
+    }
+
+    return _items;
+}
+
+item& rss::getItem(const int index) {
+    getItems();
+    return _items[index];
+}
+
+const item& rss::getItem(const int index) const {
+    return _items[index];
+}
+
+item& rss::operator[](const int index) {
+    return getItem(index);
+}
+
+const item& rss::operator[](const int index) const {
+    return getItem(index);
+}
+
+std::vector<rapidxml::xml_node<>*> rss::parseItems() {
+    std::vector<rapidxml::xml_node<>*> items;
+
+    if(!_ok)
         return items;
 
-    rapidxml::xml_node<> *first_item = item_node->first_node("item");
+    rapidxml::xml_node<> *first_item = _item_node->first_node("item");
     //there are no items, return empty vector
     if(first_item == 0)
         return items;
 
+    for(; first_item != NULL; first_item = first_item->next_sibling())
+        items.push_back(first_item);
+
+    /*
     for(; first_item != NULL; first_item = first_item->next_sibling()){
         std::map<std::string, std::string> tmp_item;
         for(rapidxml::xml_node<> *item_val = first_item->first_node();
@@ -239,45 +285,142 @@ std::vector<std::map<std::string, std::string>> rss::getItems() const {
             tmp_item[item_val->name()] = item_val->value();
         items.push_back(tmp_item);
     }
+    */
 
     return items;
 }
 
 bool rss::parse(const std::string& rss_str){
-    ok = true;
+    _ok = true;
 
     //parse, check for errors in xml doc
     try {
-        doc.parse<0>(doc.allocate_string(rss_str.c_str()));
+        _doc.parse<0>(_doc.allocate_string(rss_str.c_str()));
     } catch (const std::runtime_error& e){
         std::cerr << "rss::parse() runtime error: " << e.what() << std::endl;
-        ok = false;
+        _ok = false;
     } catch (const rapidxml::parse_error& e){
         std::cerr << "rss::parse() error with file: " << e.what() << std::endl;
-        ok = false;
+        _ok = false;
     }
 
     //verify that it is an rss file
-    rapidxml::xml_node<> *tmp = doc.first_node("rss");
+    rapidxml::xml_node<> *tmp = _doc.first_node("rss");
     if(tmp == NULL){
         std::cerr << "rss::parse() error with file: XML is not an rss feed!" << std::endl;
-        ok = false;
+        _ok = false;
     } else {
         tmp = tmp->first_node("channel");
         if(tmp == NULL){
             std::cerr << "rss::parse() error with file: RSS feed has no channels!" 
                 << std::endl;
-            ok = false;
+            _ok = false;
         }
     }
 
-    if(ok){
-        item_node = tmp;
+    if(_ok){
+        _item_node = tmp;
     }
-    return ok;
+    return _ok;
 }
 
 size_t rss_utils::write_to_string(void* ptr, size_t size, size_t nmemb, std::string* s){
     s->append(static_cast<char *>(ptr), size * nmemb);
     return size * nmemb;
 }
+
+item::item() {}
+item::item(rapidxml::xml_node<>* node){
+    _item = node;
+}
+
+item::item(const item& rhs){
+    _item = rhs._item;
+}
+
+item::~item() {}
+
+item& item::operator=(const item& rhs){
+    if(this != &rhs){
+        _item = rhs._item;
+    }
+    return *this;
+}
+
+item* item::clone() const {
+    item* clone = new item(*this);
+    return clone;
+}
+
+std::string item::getTitle() const {
+    rapidxml::xml_node<>* tmp = _item->first_node("title");
+    if(tmp == 0)
+        return "";
+    return tmp->value();
+}
+
+std::string item::getLink() const {
+    rapidxml::xml_node<>* tmp = _item->first_node("link");
+    if(tmp == 0)
+        return "";
+    return tmp->value();
+}
+
+std::string item::getDescription() const {
+    rapidxml::xml_node<>* tmp = _item->first_node("description");
+    if(tmp == 0)
+        return "";
+    return tmp->value();
+}
+
+std::string item::getAuthor() const {
+    rapidxml::xml_node<>* tmp = _item->first_node("author");
+    if(tmp == 0)
+        return "";
+    return tmp->value();
+}
+
+std::string item::getCategory() const {
+    rapidxml::xml_node<>* tmp = _item->first_node("category");
+    if(tmp == 0)
+        return "";
+    return tmp->value();
+}
+
+std::string item::getComments() const {
+    rapidxml::xml_node<>* tmp = _item->first_node("comments");
+    if(tmp == 0)
+        return "";
+    return tmp->value();
+}
+
+/*
+std::string item::getEnclosure() const {
+    rapidxml::xml_node<>* tmp = _item->first_node("enclosure");
+    if(tmp == 0)
+        return "";
+    return tmp->value();
+}
+*/
+
+std::string item::getGuid() const {
+    rapidxml::xml_node<>* tmp = _item->first_node("guid");
+    if(tmp == 0)
+        return "";
+    return tmp->value();
+}
+
+std::string item::getPubDate() const {
+    rapidxml::xml_node<>* tmp = _item->first_node("pubDate");
+    if(tmp == 0)
+        return "";
+    return tmp->value();
+}
+
+std::string item::getSource() const {
+    rapidxml::xml_node<>* tmp = _item->first_node("source");
+    if(tmp == 0)
+        return "";
+    return tmp->value();
+}
+

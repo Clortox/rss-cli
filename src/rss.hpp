@@ -14,6 +14,8 @@
 #include <vector>
 #include <map>
 #include <iostream>
+#include <stdexcept>
+#include "tylers_utils.hpp" 
 
 #include <rapidxml/rapidxml.hpp>
 #include <rapidxml/rapidxml_print.hpp>
@@ -21,6 +23,7 @@
 
 namespace rss_utils {
     typedef std::vector<std::map<std::string, std::string>> item_map;
+    class item;
     class rss {
     public:
         rss();
@@ -51,20 +54,53 @@ namespace rss_utils {
         std::string getDocs()           const;
         std::string getTTL()            const;
         std::string getLastBuildDate()  const;
+        int         getItemCount()      const;
+
+        std::vector<item> getItems();
+
+        item& getItem(const int);
+        const item& getItem(const int) const;
+        item& operator[](const int);
+        const item& operator[](const int) const;
 
         //TODO
         //std::string getImage()          const;
         //std::string getCloud()          const;
 
-        std::vector<std::map<std::string, std::string>> getItems() const;
-
     private:
         bool parse(const std::string&);
+        std::vector<rapidxml::xml_node<>*> parseItems();
 
-        bool ok;
-        std::string uri;
-        rapidxml::xml_node<> *item_node;
-        rapidxml::xml_document<> doc;
+        bool _ok;
+        std::string _uri;
+        rapidxml::xml_node<> *_item_node;
+        rapidxml::xml_document<> _doc;
+        std::vector<item> _items;
+    };
+
+    class item {
+    public:
+        item();
+        item(rapidxml::xml_node<>*);
+        item(const item&);
+        ~item();
+        item& operator=(const item&);
+        item* clone() const;
+
+        std::string getTitle()       const;
+        std::string getLink()        const;
+        std::string getDescription() const;
+        std::string getAuthor()      const;
+        std::string getCategory()    const;
+        std::string getComments()    const;
+        //std::string getEnclosure()   const;
+        std::string getGuid()        const;
+        std::string getPubDate()     const;
+        std::string getSource()      const;
+
+
+    private:
+        rapidxml::xml_node<> *_item;
     };
 
     size_t write_to_string(void*, size_t, size_t, std::string*);

@@ -67,6 +67,7 @@ void rss_utils::testRSS() {
         assert(feed.isOk() == false);
         std::cout << "char* setURI tests passed!" << std::endl;
     }
+    /*
     {
         rss_utils::rss feed(url1);
         rss_utils::item_map items = feed.getItems();
@@ -79,5 +80,34 @@ void rss_utils::testRSS() {
         }
         std::cout << "=== Done with Items ===" << std::endl;
     }
+    */
     std::cout << "===== test RSS class =====" << std::endl;
+}
+
+void rss_utils::testItems() {
+    std::cout << "===== test RSS Items =====" << std::endl;    
+    std::string url1 = "https://www.feedforall.com/sample-feed.xml";
+    std::string bad_url = "https://www.not_a_real_link.com/";
+
+    {
+        rss_utils::rss feed(url1);
+        std::vector<rss_utils::item> items = feed.getItems();
+        //display items
+        std::cout << "===== Item =====" << std::endl;
+        for(auto it = items.begin(); it != items.end(); ++it){
+            std::cout << (*it).getTitle() << std::endl;
+            std::cout << (*it).getLink() << std::endl;
+            std::cout << (*it).getDescription() << std::endl;
+            std::cout << (*it).getAuthor() << std::endl;
+            std::cout << (*it).getCategory() << std::endl;
+            std::cout << (*it).getComments() << std::endl;
+            std::cout << (*it).getGuid() << std::endl;
+            std::cout << (*it).getPubDate() << std::endl;
+            std::cout << (*it).getSource() << std::endl;
+            std::cout << "===== Item =====" << std::endl;
+        }
+    }
+
+    std::cout << "===== test RSS Items =====" << std::endl;
+
 }
