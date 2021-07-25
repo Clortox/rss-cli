@@ -434,6 +434,18 @@ std::string item::getGuid() const {
     return cdata_to_string(tmp);
 }
 
+bool item::getGuidPermaLink() const {
+    rapidxml::xml_node<>* tmp = _item->first_node("guid");
+    if(tmp == 0)
+        return false;
+    rapidxml::xml_attribute<>* attr = tmp->first_attribute("isPermaLink");
+    if(attr == 0)
+        return false;
+    else if(attr->value() == std::string("true"))
+        return false;
+    return false;
+}
+
 std::string item::getPubDate() const {
     rapidxml::xml_node<>* tmp = _item->first_node("pubDate");
     if(tmp == 0)
@@ -448,3 +460,35 @@ std::string item::getSource() const {
     return cdata_to_string(tmp);
 }
 
+std::string item::getEnclosureURL() const {
+    rapidxml::xml_node<>* tmp = _item->first_node("enclosure");
+    if(tmp == 0)
+        return "";
+    rapidxml::xml_attribute<>* attr = tmp->first_attribute("url");
+    if(attr == 0)
+        return "";
+    else
+        return attr->value();
+}
+
+std::string item::getEnclosureType() const {
+    rapidxml::xml_node<>* tmp = _item->first_node("enclosure");
+    if(tmp == 0)
+        return "";
+    rapidxml::xml_attribute<>* attr = tmp->first_attribute("type");
+    if(attr == 0)
+        return "";
+    else
+        return attr->value();
+}
+
+int item::getEnclosureLength() const {
+    rapidxml::xml_node<>* tmp = _item->first_node("enclosure");
+    if(tmp == 0)
+        return -1;
+    rapidxml::xml_attribute<>* attr = tmp->first_attribute("length");
+    if(attr == 0)
+        return -1;
+    else
+        return atoi(attr->value());
+}

@@ -88,16 +88,20 @@ namespace rss_utils {
         item& operator=(const item&);
         item* clone() const;
 
-        std::string getTitle()       const;
-        std::string getLink()        const;
-        std::string getDescription() const;
-        std::string getAuthor()      const;
-        std::string getCategory()    const;
-        std::string getComments()    const;
-        //std::string getEnclosure()   const;
-        std::string getGuid()        const;
-        std::string getPubDate()     const;
-        std::string getSource()      const;
+        std::string getTitle()           const;
+        std::string getLink()            const;
+        std::string getDescription()     const;
+        std::string getAuthor()          const;
+        std::string getCategory()        const;
+        std::string getComments()        const;
+        std::string getGuid()            const;
+        bool        getGuidPermaLink()   const;
+        std::string getPubDate()         const;
+        std::string getSource()          const;
+        
+        std::string getEnclosureURL()    const;
+        std::string getEnclosureType()   const;
+        int         getEnclosureLength() const;
 
 
     private:
