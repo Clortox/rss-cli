@@ -10,4 +10,4 @@
  * Set to 1 to compile and run the test suite
  */
 
-#define _TESTS_ 1
+#define _TESTS_ 0

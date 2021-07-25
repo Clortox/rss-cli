@@ -32,11 +32,16 @@ int main(int argc, char** argv) {
     if(!feed.isOk())
         exit(-1);
 
-    //display requested attributes
+
+    //display requested attributes and items
     std::string output = rss_utils::rss_to_list(feed, opts);
 
-    std::cout << output << std::endl;
+    if(opts->items != nullptr){
+        feed.getItems();
+        output += "\n" + rss_utils::rss_to_items(feed, opts);
+    }
 
+    std::cout << output << std::endl;
 
     delete opts;
     return 0;
