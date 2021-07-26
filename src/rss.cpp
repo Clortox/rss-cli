@@ -77,26 +77,31 @@ std::string rss::getURI() const { return _uri; }
 bool rss::update() {
     std::string result;
 
-    CURL *curl;
-    CURLcode res;
-    curl = curl_easy_init();
+    if(_uri == "-"){
+        std::getline(std::cin, result);
+        return parse(result);
+    } else {
+        CURL *curl;
+        CURLcode res;
+        curl = curl_easy_init();
 
-    if(curl){
-        curl_easy_setopt(curl, CURLOPT_URL, _uri.c_str());
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, rss_utils::write_to_string);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
-        res = curl_easy_perform(curl);
-        curl_easy_cleanup(curl);
+        if(curl){
+            curl_easy_setopt(curl, CURLOPT_URL, _uri.c_str());
+            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, rss_utils::write_to_string);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
+            res = curl_easy_perform(curl);
+            curl_easy_cleanup(curl);
 
-        if(res == CURLE_OK){
-            return parse(result);
-        } else {
-            std::cerr << "curl_easy_perform(curl) failed: "
-                << curl_easy_strerror(res) << std::endl;
+            if(res == CURLE_OK){
+                return parse(result);
+            } else {
+                std::cerr << "curl_easy_perform(curl) failed: "
+                    << curl_easy_strerror(res) << std::endl;
+            }
         }
+       _ok = false;
+        return false;
     }
-    _ok = false;
-    return false;
 }
 
 std::string rss::getTitle() const {

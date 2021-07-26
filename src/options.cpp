@@ -11,7 +11,9 @@ void help(char* progName){
     std::cout << "[-i ITEM_INDEX] [ITEM FLAGS]\n";
     std::cout << "Options:\n";
     std::cout << "Required Options:\n";
-    std::cout << " [-u, --uri] URI        URI of the rss stream\n\n";
+    std::cout << " [-u, --uri] URI        URI of the rss stream\n";
+    std::cout << "                        Also accepts '-' to take input\n";
+    std::cout << "                        from stdin (stops once a newline is reached)\n\n";
 
     std::cout << "Channel information:\n";
     std::cout << " [-t, --title]          Get title of channel\n";

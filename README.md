@@ -34,6 +34,8 @@ Usage: ./bin/rss-cli [-u FEED_URI] [CHANNEL FLAGS] [-i ITEM_INDEX] [ITEM FLAGS]
 Options:
 Required Options:
  [-u, --uri] URI        URI of the rss stream
+                        Also accepts '-' to take input
+                        from stdin (stops once a newline is reached)
 
 Channel information:
  [-t, --title]          Get title of channel
