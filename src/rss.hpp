@@ -42,26 +42,32 @@ namespace rss_utils {
 
         bool update();
 
-        std::string getTitle()          const;
-        std::string getLink()           const;
-        std::string getDescription()    const;
-        std::string getLanguage()       const;
-        std::string getWebMaster()      const;
-        std::string getCopyright()      const;
-        std::string getPubDate()        const;
-        std::string getManagingEditor() const;
-        std::string getGenerator()      const;
-        std::string getDocs()           const;
-        std::string getTTL()            const;
-        std::string getLastBuildDate()  const;
+        std::string getTitle()             const;
+        std::string getLink()              const;
+        std::string getDescription()       const;
+        std::string getLanguage()          const;
+        std::string getWebMaster()         const;
+        std::string getCopyright()         const;
+        std::string getPubDate()           const;
+        std::string getManagingEditor()    const;
+        std::string getGenerator()         const;
+        std::string getDocs()              const;
+        std::string getTTL()               const;
+        std::string getLastBuildDate()     const;
 
-        std::string getImageURL()       const;
-        std::string getImageTitle()     const;
-        std::string getImageLink()      const;
-        int         getImageWidth()     const;
-        int         getImageHeight()    const;
+        std::string getImageURL()          const;
+        std::string getImageTitle()        const;
+        std::string getImageLink()         const;
+        int         getImageWidth()        const;
+        int         getImageHeight()       const;
 
-        int         getItemCount()      const;
+        std::string getCloudDomain()       const;
+        int         getCloudPort()         const;
+        std::string getCloudPath()         const;
+        std::string getRegisterProcedure() const;
+        std::string getProtocol()          const;
+
+        int         getItemCount()         const;
         std::vector<item> getItems();
 
         item& getItem(const int);
@@ -69,8 +75,6 @@ namespace rss_utils {
         item& operator[](const int);
         const item& operator[](const int) const;
 
-        //TODO
-        //std::string getCloud()          const;
 
     private:
         bool parse(const std::string&);

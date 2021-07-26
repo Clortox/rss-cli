@@ -247,7 +247,7 @@ std::string rss::getImageTitle() const {
     return cdata_to_string(tmp);
 }
 
-std::string rss::getimageLink() const {
+std::string rss::getImageLink() const {
     if(!_ok)
         return "";
 
@@ -260,7 +260,7 @@ std::string rss::getimageLink() const {
     return cdata_to_string(tmp);
 }
 
-int rss::getimageWidth() const {
+int rss::getImageWidth() const {
     if(!_ok)
         return 0;
 
@@ -273,7 +273,7 @@ int rss::getimageWidth() const {
     return atoi(tmp->value());
 }
 
-int rss::getimageHeight() const {
+int rss::getImageHeight() const {
     if(!_ok)
         return 0;
 
@@ -284,6 +284,76 @@ int rss::getimageHeight() const {
     if(tmp == 0)
         return 0;
     return atoi(tmp->value());
+}
+
+std::string rss::getCloudDomain() const {
+    if(!_ok)
+        return "";
+
+    rapidxml::xml_node<> *tmp = _item_node->first_node("cloud");
+    if(tmp == 0)
+        return "";
+    rapidxml::xml_attribute<> *attr = tmp->first_attribute("domain");
+    if(attr == 0)
+        return "";
+
+    return attr->value();
+}
+
+int rss::getCloudPort() const {
+    if(!_ok)
+        return 0;
+
+    rapidxml::xml_node<> *tmp = _item_node->first_node("cloud");
+    if(tmp == 0)
+        return 0;
+    rapidxml::xml_attribute<> *attr = tmp->first_attribute("port");
+    if(attr == 0)
+        return 0;
+
+    return atoi(attr->value());
+}
+
+std::string rss::getCloudPath() const {
+    if(!_ok)
+        return "";
+
+    rapidxml::xml_node<> *tmp = _item_node->first_node("cloud");
+    if(tmp == 0)
+        return "";
+    rapidxml::xml_attribute<> *attr = tmp->first_attribute("path");
+    if(attr == 0)
+        return "";
+
+    return attr->value();
+}
+
+std::string rss::getRegisterProcedure() const {
+    if(!_ok)
+        return "";
+
+    rapidxml::xml_node<> *tmp = _item_node->first_node("cloud");
+    if(tmp == 0)
+        return "";
+    rapidxml::xml_attribute<> *attr = tmp->first_attribute("registerProcedure");
+    if(attr == 0)
+        return "";
+
+    return attr->value();
+}
+
+std::string rss::getProtocol() const {
+    if(!_ok)
+        return "";
+
+    rapidxml::xml_node<> *tmp = _item_node->first_node("cloud");
+    if(tmp == 0)
+        return "";
+    rapidxml::xml_attribute<> *attr = tmp->first_attribute("protocol");
+    if(attr == 0)
+        return "";
+
+    return attr->value();
 }
 
 int rss::getItemCount() const {
@@ -341,16 +411,6 @@ std::vector<rapidxml::xml_node<>*> rss::parseItems() {
 
     for(; first_item != NULL; first_item = first_item->next_sibling())
         items.push_back(first_item);
-
-    /*
-    for(; first_item != NULL; first_item = first_item->next_sibling()){
-        std::map<std::string, std::string> tmp_item;
-        for(rapidxml::xml_node<> *item_val = first_item->first_node();
-                item_val != NULL; item_val = item_val->next_sibling())
-            tmp_item[item_val->name()] = item_val->value();
-        items.push_back(tmp_item);
-    }
-    */
 
     return items;
 }
@@ -483,15 +543,6 @@ std::string item::getComments() const {
     return cdata_to_string(tmp);
 }
 
-/*
-std::string item::getEnclosure() const {
-    rapidxml::xml_node<>* tmp = _item->first_node("enclosure");
-    if(tmp == 0)
-        return "";
-    return cdata_to_string(tmp);
-}
-*/
-
 std::string item::getGuid() const {
     rapidxml::xml_node<>* tmp = _item->first_node("guid");
     if(tmp == 0)
@@ -507,7 +558,7 @@ bool item::getGuidPermaLink() const {
     if(attr == 0)
         return false;
     else if(attr->value() == std::string("true"))
-        return false;
+        return true;
     return false;
 }
 
@@ -532,8 +583,7 @@ std::string item::getEnclosureURL() const {
     rapidxml::xml_attribute<>* attr = tmp->first_attribute("url");
     if(attr == 0)
         return "";
-    else
-        return attr->value();
+    return attr->value();
 }
 
 std::string item::getEnclosureType() const {
@@ -543,8 +593,7 @@ std::string item::getEnclosureType() const {
     rapidxml::xml_attribute<>* attr = tmp->first_attribute("type");
     if(attr == 0)
         return "";
-    else
-        return attr->value();
+    return attr->value();
 }
 
 int item::getEnclosureLength() const {
@@ -554,6 +603,5 @@ int item::getEnclosureLength() const {
     rapidxml::xml_attribute<>* attr = tmp->first_attribute("length");
     if(attr == 0)
         return -1;
-    else
-        return atoi(attr->value());
+    return atoi(attr->value());
 }
