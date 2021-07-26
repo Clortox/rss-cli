@@ -17,17 +17,27 @@ void help(char* progName){
     std::cout << " [-t, --title]          Get title of channel\n";
     std::cout << " [-l, --link]           Get link to channel\n";
     std::cout << " [-d, --description]    Get description of channel\n";
-    std::cout << " [-e, --language]       Get language code of channel\n";
+    std::cout << " [-L, --language]       Get language code of channel\n";
     std::cout << " [-m, --webmaster]      Get webMaster's email\n";
     std::cout << " [-c, --copyright]      Get copyright\n";
     std::cout << " [-p, --pubdate]        Get publishing date\n";
-    std::cout << " [-q, --managingeditor] Get managing editor\n";
+    std::cout << " [-e, --managingeditor] Get managing editor\n";
     std::cout << " [-g, --generator]      Get generator of this feed\n";
     std::cout << " [-o, --docs]           Get link to RSS documentation\n";
     std::cout << " [-w, --ttl]            Get ttl, time that channel can be\n";
     std::cout << "                        cached before being updated\n";
     std::cout << " [-b, --builddate]      Get last time the channel's\n";
     std::cout << "                        content changed\n";
+    std::cout << " [-Q, --imageurl]       Get channel image URL\n";
+    std::cout << " [-I, --imagetitle]     Get image title, same as ALT in html\n";
+    std::cout << " [-E, --imagelink]      Get link to site, image will act as a link\n";
+    std::cout << " [-W, --imagewidth]     Get width of image\n";
+    std::cout << " [-H, --imageheight]    Get height of image\n";
+    std::cout << " [-D, --clouddomain]    Get domain of feed update service\n";
+    std::cout << " [-P, --cloudport]      Get port of feed update service\n";
+    std::cout << " [-A, --cloudpath]      Get path to access for feed update service\n";
+    std::cout << " [-R, --cloudregister]  Get register procedure for feed update service\n";
+    std::cout << " [-O, --cloudprotocol]  Get protocol feed update service uses\n";
     std::cout << " [-i, --item] INDEX     Provide index of item to display\n";
     std::cout << "                        If no index is provided, assume the first\n";
     std::cout << "                        item in the feed. All following flags will\n";
@@ -39,11 +49,14 @@ void help(char* progName){
     std::cout << " [-l, --link]           Get link\n";
     std::cout << " [-d, --description]    Get description\n";
     std::cout << " [-a, --author]         Get author\n";
-    std::cout << " [-z, --category]       Get category list\n";
+    std::cout << " [-C, --category]       Get category list\n";
     std::cout << " [-f, --comments]       Get link to comments\n";
-    std::cout << " [-j, --guid]           Get GUID\n";
+    std::cout << " [-G, --guid]           Get GUID\n";
     std::cout << " [-p, --pubdate]        Get publishing date\n";
-    std::cout << " [-s, --source]         Get source of item\n\n";
+    std::cout << " [-s, --source]         Get source of item\n";
+    std::cout << " [-U, --enclosureurl]   Get enclosure URL\n";
+    std::cout << " [-T, --enclosuretype]  Get enclosure MIME type\n";
+    std::cout << " [-K, --enclosurelength]Get enclosure length, in bytes\n\n";
 
     std::cout << "General options:\n";
     std::cout << " [-h, --help]           Show this message\n\n";
@@ -92,11 +105,11 @@ option_flags* parse_options(int argc, char** argv) {
                 else
                     current_item->description ^= 1;
                 break;
-            case 'e':
+            case 'L':
                 if(current_item == nullptr)
                     ret->language ^= 1;
                 else
-                    std::cerr << "-e option not understood in context of --item; ignoring" << std::endl;
+                    std::cerr << "-L option not understood in context of --item; ignoring" << std::endl;
                 break;
             case 'm':
                 if(current_item == nullptr)
@@ -116,11 +129,11 @@ option_flags* parse_options(int argc, char** argv) {
                 else
                     current_item->pubdate ^= 1;
                 break;
-            case 'q':
+            case 'e':
                 if(current_item == nullptr)
                     ret->managingeditor ^= 1;
                 else
-                    std::cerr << "-q option not understood in context of --item; ignoring" << std::endl;
+                    std::cerr << "-e option not understood in context of --item; ignoring" << std::endl;
                 break;
             case 'g':
                 if(current_item == nullptr)
@@ -146,6 +159,66 @@ option_flags* parse_options(int argc, char** argv) {
                 else
                     std::cerr << "-b option not understood in context of --item; ignoring" << std::endl;
                 break;
+            case 'Q':
+                if(current_item == nullptr)
+                    ret->imageurl ^= 1;
+                else
+                    std::cerr << "-Q option not understood in context of --item; ignoring" << std::endl;
+                break;
+            case 'I':
+                if(current_item == nullptr)
+                    ret->imagetitle ^= 1;
+                else
+                    std::cerr << "-I option not understood in context of --item; ignoring" << std::endl;
+                break;
+            case 'E':
+                if(current_item == nullptr)
+                    ret->imagelink ^= 1;
+                else 
+                    std::cerr << "-E option not understood in context of --item; ignoring" << std::endl;
+                break;
+            case 'W':
+                if(current_item == nullptr)
+                    ret->imagewidth ^= 1;
+                else
+                    std::cerr << "-I option not understood in context of --item; ignoring" << std::endl;
+                break;
+            case 'H':
+                if(current_item == nullptr)
+                    ret->imageheight ^= 1;
+                else
+                    std::cerr << "-I option not understood in context of --item; ignoring" << std::endl;
+                break;
+            case 'D':
+                if(current_item == nullptr)
+                    ret->clouddomain ^= 1;
+                else
+                    std::cerr << "-I option not understood in context of --item; ignoring" << std::endl;
+                break;
+            case 'P':
+                if(current_item == nullptr)
+                    ret->cloudport ^= 1;
+                else
+                    std::cerr << "-I option not understood in context of --item; ignoring" << std::endl;
+                break;
+            case 'A':
+                if(current_item == nullptr)
+                    ret->cloudpath ^= 1;
+                else
+                    std::cerr << "-I option not understood in context of --item; ignoring" << std::endl;
+                break;
+            case 'R':
+                if(current_item == nullptr)
+                    ret->cloudregister ^= 1;
+                else
+                    std::cerr << "-I option not understood in context of --item; ignoring" << std::endl;
+                break;
+            case 'O':
+                if(current_item == nullptr)
+                    ret->cloudprotocol ^= 1;
+                else
+                    std::cerr << "-I option not understood in context of --item; ignoring" << std::endl;
+                break;
             case 'i':
                 if(ret->items == nullptr){
                     ret->items = new item_flags[ret->item_count + 1];
@@ -170,9 +243,9 @@ option_flags* parse_options(int argc, char** argv) {
                 } else
                     current_item->author ^= 1;
                 break;
-            case 'z':
+            case 'C':
                 if(current_item == nullptr){
-                    std::cerr << "Invalid option in this context: [-z --category]" << std::endl;
+                    std::cerr << "Invalid option in this context: [-C --category]" << std::endl;
                     std::cerr << "Did you provide the [-i --index] flag first?" << std::endl;
                 } else
                     current_item->category ^= 1;
@@ -184,9 +257,9 @@ option_flags* parse_options(int argc, char** argv) {
                 } else
                     current_item->comments ^= 1;
                 break;
-            case 'j':
+            case 'G':
                 if(current_item == nullptr){
-                    std::cerr << "Invalid option in this context: [-j --guid]" << std::endl;
+                    std::cerr << "Invalid option in this context: [-G --guid]" << std::endl;
                     std::cerr << "Did you provide the [-i --index] flag first?" << std::endl;
                 } else
                     current_item->guid ^= 1;
@@ -197,6 +270,27 @@ option_flags* parse_options(int argc, char** argv) {
                     std::cerr << "Did you provide the [-i --index] flag first?" << std::endl;
                 } else
                     current_item->source ^= 1;
+                break;
+            case 'U':
+                if(current_item == nullptr){
+                    std::cerr << "Invalid option in this context: [-U --enclosureurl]" << std::endl;
+                    std::cerr << "Did you provide the [-i --index] flag first?" << std::endl;
+                } else
+                    current_item->enclosureurl ^= 1;
+                break;
+            case 'T':
+                if(current_item == nullptr){
+                    std::cerr << "Invalid option in this context: [-T --enclosuretype]" << std::endl;
+                    std::cerr << "Did you provide the [-i --index] flag first?" << std::endl;
+                } else 
+                    current_item->enclosuretype ^= 1;
+                break;
+            case 'K':
+                if(current_item == nullptr){
+                    std::cerr << "Invalid option in this context: [-K --enclosurelength]" << std::endl;
+                    std::cerr << "Did you provide the [-i --index] flag first?" << std::endl;
+                } else
+                    current_item->enclosurelength ^= 1;
                 break;
             case ':': //go here if flag that requires argument is passed, but no arg given
                 switch(optopt){

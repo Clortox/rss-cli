@@ -35,6 +35,26 @@ std::string rss_utils::rss_to_list(const rss& rss_obj, const option_flags* flags
         ret += rss_obj.getTTL() + "\n";
     if(flags->builddate)
         ret += rss_obj.getLastBuildDate() + "\n";
+    if(flags->imageurl)
+        ret += rss_obj.getImageURL() + "\n";
+    if(flags->imagetitle)
+        ret += rss_obj.getImageTitle() + "\n";
+    if(flags->imagelink)
+        ret += rss_obj.getImageLink() + "\n";
+    if(flags->imagewidth)
+        ret += rss_obj.getImageWidth() + "\n";
+    if(flags->imageheight)
+        ret += rss_obj.getImageHeight() + "\n";
+    if(flags->clouddomain)
+        ret += rss_obj.getCloudDomain() +"\n";
+    if(flags->cloudport)
+        ret += rss_obj.getCloudPort() + "\n";
+    if(flags->cloudpath)
+        ret += rss_obj.getCloudPath() + "\n";
+    if(flags->cloudregister)
+        ret += rss_obj.getCloudRegisterProcedure() + "\n";
+    if(flags->cloudprotocol)
+        ret += rss_obj.getCloudProtocol() + "\n";
 
     if(ret.length() > 0)
         ret.pop_back();
@@ -56,7 +76,7 @@ std::string rss_utils::rss_to_items(const rss& rss_obj, const option_flags* flag
 
     for(unsigned int i=0; i < flags->item_count; ++i, ++items){
         //if has a valid index
-        if(items->index >= 0 && items->index < maxItem){
+        if(items->index >= 0 && items->index < maxItem) {
             rss_utils::item cur_item = rss_obj[items->index];
             if(items->title)
                 ret += cur_item.getTitle() + "\n";
@@ -76,6 +96,13 @@ std::string rss_utils::rss_to_items(const rss& rss_obj, const option_flags* flag
                 ret += cur_item.getPubDate() + "\n";
             if(items->source)
                 ret += cur_item.getSource() + "\n";
+            if(items->enclosureurl)
+                ret += cur_item.getEnclosureURL() + "\n";
+            if(items->enclosuretype)
+                ret += cur_item.getEnclosureType() + "\n";
+            if(items->enclosurelength)
+                ret += std::to_string(cur_item.getEnclosureLength()) + "\n";
+
         } else
             std::cerr << "Index on item " << i << " is not valid!" << std::endl;
     }
@@ -112,6 +139,26 @@ bool rss_utils::rss_opts_empty(const option_flags* flags){
     if(flags->ttl)
         return false;
     if(flags->builddate)
+        return false;
+    if(flags->imageurl)
+        return false;
+    if(flags->imagetitle)
+        return false;
+    if(flags->imagelink)
+        return false;
+    if(flags->imagewidth)
+        return false;
+    if(flags->imageheight)
+        return false;
+    if(flags->clouddomain)
+        return false;
+    if(flags->cloudport)
+        return false;
+    if(flags->cloudpath)
+        return false;
+    if(flags->cloudregister)
+        return false;
+    if(flags->cloudprotocol)
         return false;
 
     return true;

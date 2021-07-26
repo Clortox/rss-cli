@@ -43,8 +43,6 @@ int main(int argc, char** argv) {
         output += "\n" + rss_utils::rss_to_items(feed, opts);
     }
 
-    std::cout << "Item count: " << feed.getItemCount() << std::endl;
-
     std::cout << output << std::endl;
 
     delete opts;

@@ -328,7 +328,7 @@ std::string rss::getCloudPath() const {
     return attr->value();
 }
 
-std::string rss::getRegisterProcedure() const {
+std::string rss::getCloudRegisterProcedure() const {
     if(!_ok)
         return "";
 
@@ -342,7 +342,7 @@ std::string rss::getRegisterProcedure() const {
     return attr->value();
 }
 
-std::string rss::getProtocol() const {
+std::string rss::getCloudProtocol() const {
     if(!_ok)
         return "";
 
@@ -451,7 +451,6 @@ bool rss::parse(const std::string& rss_str){
 
 std::string rss::cdata_to_string(const rapidxml::xml_node<>* node) const{
     //this will dig till were past the cdata
-    std::cout << "in cdata" << std::endl;
     const rapidxml::xml_node<>* tmp = node;
     while(tmp->value()[0] == '\0'){ //if string is empty
         tmp = tmp->first_node();
@@ -468,7 +467,6 @@ size_t rss_utils::write_to_string(void* ptr, size_t size, size_t nmemb, std::str
 
 std::string item::cdata_to_string(const rapidxml::xml_node<>* node) const{
     //this will dig till were past the cdata
-    std::cout << "in cdata" << std::endl;
     const rapidxml::xml_node<>* tmp = node;
     while(tmp->value()[0] == '\0'){ //if string is empty
         tmp = tmp->first_node();
