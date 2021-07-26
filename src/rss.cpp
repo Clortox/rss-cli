@@ -221,6 +221,71 @@ std::string rss::getLastBuildDate() const {
     return cdata_to_string(tmp);
 }
 
+std::string rss::getImageURL() const {
+    if(!_ok)
+        return "";
+
+    rapidxml::xml_node<> *tmp = _item_node->first_node("image");
+    if(tmp == 0)
+        return "";
+    tmp = tmp->first_node("url");
+    if(tmp == 0)
+        return "";
+    return cdata_to_string(tmp);
+}
+
+std::string rss::getImageTitle() const {
+    if(!_ok)
+        return "";
+
+    rapidxml::xml_node<> *tmp = _item_node->first_node("image");
+    if(tmp == 0)
+        return "";
+    tmp = tmp->first_node("title");
+    if(tmp == 0)
+        return "";
+    return cdata_to_string(tmp);
+}
+
+std::string rss::getimageLink() const {
+    if(!_ok)
+        return "";
+
+    rapidxml::xml_node<> *tmp = _item_node->first_node("image");
+    if(tmp == 0)
+        return "";
+    tmp = tmp->first_node("link");
+    if(tmp == 0)
+        return "";
+    return cdata_to_string(tmp);
+}
+
+int rss::getimageWidth() const {
+    if(!_ok)
+        return 0;
+
+    rapidxml::xml_node<> *tmp = _item_node->first_node("image");
+    if(tmp == 0)
+        return 0;
+    tmp = tmp->first_node("width");
+    if(tmp == 0)
+        return 0;
+    return atoi(tmp->value());
+}
+
+int rss::getimageHeight() const {
+    if(!_ok)
+        return 0;
+
+    rapidxml::xml_node<> *tmp = _item_node->first_node("image");
+    if(tmp == 0)
+        return 0;
+    tmp = tmp->first_node("height");
+    if(tmp == 0)
+        return 0;
+    return atoi(tmp->value());
+}
+
 int rss::getItemCount() const {
     if(!_ok)
         return -1;

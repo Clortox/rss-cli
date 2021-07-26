@@ -54,8 +54,14 @@ namespace rss_utils {
         std::string getDocs()           const;
         std::string getTTL()            const;
         std::string getLastBuildDate()  const;
-        int         getItemCount()      const;
 
+        std::string getImageURL()       const;
+        std::string getImageTitle()     const;
+        std::string getImageLink()      const;
+        int         getImageWidth()     const;
+        int         getImageHeight()    const;
+
+        int         getItemCount()      const;
         std::vector<item> getItems();
 
         item& getItem(const int);
@@ -64,7 +70,6 @@ namespace rss_utils {
         const item& operator[](const int) const;
 
         //TODO
-        //std::string getImage()          const;
         //std::string getCloud()          const;
 
     private:
