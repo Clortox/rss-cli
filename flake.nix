@@ -12,7 +12,7 @@
       pkgs = import nixpkgs {
         inherit system;
       };
-      mousetrap = (with pkgs; stdenv.mkDerivation {
+      rss-cli = (with pkgs; stdenv.mkDerivation {
           pname = "rss-cli";
           version = "master";
           src = fetchgit {
@@ -38,11 +38,10 @@
       defaultApp = flake-utils.lib.mkApp {
         drv = defaultPackage;
       };
-      defaultPackage = mousetrap;
+      defaultPackage = rss-cli;
       devShell = pkgs.mkShell {
         buildInputs = [
-          mousetrap
-          pkgs.libnotify
+          rss-cli
         ];
       };
     }
